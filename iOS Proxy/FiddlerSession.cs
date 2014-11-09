@@ -34,6 +34,7 @@ namespace iOS_Proxy
                 }
             }
 
+
             requestContentType = "";
             if (session.oRequest.headers != null)
             {
