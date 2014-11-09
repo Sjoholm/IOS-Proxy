@@ -52,7 +52,16 @@ namespace iOS_Proxy
         private void dgvSessionList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow dgvrSession = dgvSessionList.Rows[e.RowIndex];
-            frmInspect inspect = new frmInspect(dgvrSession.Cells["Request"].Value.ToString(), dgvrSession.Cells["Response"].Value.ToString());
+            string RespContType = dgvrSession.Cells["RespContType"].Value.ToString();
+            string Response = dgvrSession.Cells["Response"].Value.ToString();
+            if (RespContType.Contains("json") ||
+                (RespContType.Contains("text/html") && Response.Contains("{")) ||
+                (RespContType.Contains("text/plain") && Response.Contains("{")))
+            {
+                Response = JsonFormatter.PrettyPrint(Response);
+            }
+            Response = Response.Replace("&quot;", "\"");
+            frmInspect inspect = new frmInspect(dgvrSession.Cells["Request"].Value.ToString(), Response);
             inspect.Show();
         }
 

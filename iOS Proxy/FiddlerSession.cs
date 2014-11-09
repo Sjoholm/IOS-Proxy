@@ -25,17 +25,23 @@ namespace iOS_Proxy
             responseBody = session.GetResponseBodyAsString();
 
             responseContentType = "";
-            foreach (HTTPHeaderItem header in session.oResponse.headers)
+            if (session.oResponse.headers != null)
             {
-                if (header.Name == "Content-Type")
-                    responseContentType += header.Value + "\n";
+                foreach (HTTPHeaderItem header in session.oResponse.headers)
+                {
+                    if (header.Name == "Content-Type")
+                        responseContentType += header.Value + "\n";
+                }
             }
 
             requestContentType = "";
-            foreach (HTTPHeaderItem header in session.oRequest.headers)
+            if (session.oRequest.headers != null)
             {
-                if (header.Name == "Content-Type")
-                    requestContentType += header.Value + "\n";
+                foreach (HTTPHeaderItem header in session.oRequest.headers)
+                {
+                    if (header.Name == "Content-Type")
+                        requestContentType += header.Value + "\n";
+                }
             }
         }
     }
